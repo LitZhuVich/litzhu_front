@@ -1,0 +1,60 @@
+$dark-background: #1c1e21;
+$dark-color: #a2a2a2;
+$light-background: #fff;
+$light-background: #a2a2a2;
+// 暗色主题
+$dark-theme: (
+  // 背景颜色
+  BackColor: #1c1e21,
+  // 文字颜色
+  FontColor: #a2a2a2
+);
+// 亮色主题
+$light-theme: (
+  // 背景颜色
+  BackColor: #fff,
+  // 文字颜色
+  FontColor: #a2a2a2
+);
+// 定义映射集合
+$themes: (
+  light-theme: $light-theme,
+  dark-theme: $dark-theme,
+);
+
+// 获取颜色并为当前主题色配置颜色
+// 字体颜色
+@mixin base-color() {
+  @each $theme-name, $theme in $themes {
+    [data-theme="#{$theme-name}"] & {
+      color: map-get($map: $theme, $key: base-color);
+    }
+  }
+}
+// 背景颜色
+@mixin base-background() {
+  @each $theme-name, $theme in $themes {
+    [data-theme="#{$theme-name}"] & {
+      color: map-get($map: $theme, $key: background-color);
+    }
+  }
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: #a2a2a2;
+  text-decoration: none;
+}
+
+ul li {
+  list-style: none;
+  color: #a2a2a2;
+}
+
+body {
+  background: #1c1e21;
+}
