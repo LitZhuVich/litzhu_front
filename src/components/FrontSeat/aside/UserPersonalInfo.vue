@@ -1,5 +1,6 @@
 <template>
-  <aside id="userInfo">
+  <!-- TODO:需要动态显示 ，用户登录则显示用户信息，否则显示自己的信息-->
+  <aside id="userInfo" class="aside">
     <div class="box">
       <div class="UserDescription">
         <div class="userImage">
@@ -50,8 +51,7 @@
   background-color: #32373d;
   overflow: hidden;
   border-radius: 15px;
-  position: sticky;
-  top: 100px;
+
   z-index: 10;
   .box {
     height: calc(100% - 50px);

@@ -1,4 +1,6 @@
 <template>
+  <!-- TODO:关于本站 -->
+  <HeaderView></HeaderView>
   <div id="app">
     <h1 class="title">About</h1>
     <p>welcome to LitZhuWebSite</p>
@@ -8,6 +10,7 @@
 <script setup lang="ts">
 import axios from "axios";
 import { ref, reactive } from "vue";
+import HeaderView from "../components/FrontSeat/Layout/HeaderView.vue";
 </script>
 
 <style scoped lang="scss">

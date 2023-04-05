@@ -1,4 +1,5 @@
 <template>
+  <HeaderView></HeaderView>
   <div id="blogBody">
     <aside>
       <WebSiteNotice></WebSiteNotice>
@@ -12,11 +13,11 @@
               :to="{
                 name: 'categoryName',
                 params: {
-                  categoryName: item.name,
+                  categoryName: item.englishname,
                 },
               }"
               active-class="active"
-              @click="getCategoryId(item.name)"
+              @click="getCategoryId(item.englishname)"
             >
               {{ item.name }}
             </router-link>
@@ -31,7 +32,7 @@
         ></BlogArticle>
       </section>
     </main>
-    <aside>
+    <aside class="sticky">
       <UserPersonalInfo></UserPersonalInfo>
       <BlogTag></BlogTag>
     </aside>
@@ -39,49 +40,53 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from "vue";
+import { ref, Ref } from "vue";
 import { useRoute } from "vue-router";
+import HeaderView from "../components/FrontSeat/Layout/HeaderView.vue";
 import BlogArticle from "../components/FrontSeat/Blog/BlogArticle.vue";
 import UserPersonalInfo from "../components/FrontSeat/aside/UserPersonalInfo.vue";
-import BlogTag from "../components/FrontSeat/Blog/BlogTag.vue";
+import BlogTag from "../components/FrontSeat/aside/BlogTag.vue";
 import WebSiteNotice from "../components/FrontSeat/aside/WebSiteNotice.vue";
 import WebSiteInfo from "../components/FrontSeat/aside/WebSiteInfo.vue";
 import axios from "axios";
 const route = useRoute();
+// 分类类型
+interface categoryType {
+  id: number;
+  englishname: string | string[];
+  name: string;
+}
+// 文章类型
+interface articleType {
+  id: number;
+}
 // 存放分类的数组
-let categorys: any[] = reactive([]);
+const categorys: Ref<categoryType[]> = ref([]);
 // 存放文章的数组
-let articles: any[] = reactive([]);
-// 读取的是 phpStudy 的Nginx代理数据 (本地服务器)
-const getAllCaategory = (): void => {
-  axios
-    .get("http://www.litzhuvxzvin.com/api/v1/category")
-    .then((result) => {
-      result.data.forEach((item: any) => {
-        categorys.push(item);
-      });
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
+const articles: Ref<articleType[]> = ref([]);
+// 获取所有分类
+const getAllCategory = async (): Promise<void> => {
+  try {
+    const response = await axios.get("http://litzhu.svvs.top/api/v1/category");
+    categorys.value = response.data;
+  } catch (error: any) {
+    console.log(error.message);
+  }
+};
+// 通过分类名字获取文章
+const getCategoryId = async (name: string | string[]): Promise<void> => {
+  try {
+    const response = await axios.get(
+      `http://www.litzhuvxzvin.com/api/v1/category/${name}`
+    );
+    articles.value = response.data.article.map((item: string) => item);
+  } catch (error: any) {
+    console.log(error.message);
+  }
 };
 // 调用显示所有分类
-getAllCaategory();
-// 通过分类名字获取文章
-const getCategoryId = (name: string | string[]): void => {
-  articles.length = 0;
-  axios
-    .get(`http://www.litzhuvxzvin.com/api/v1/article/${name}`)
-    .then((result) => {
-      result.data.article.forEach((item: any) => {
-        articles.push(item);
-      });
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
-};
-// 默认调用 全部
+getAllCategory();
+// 默认调用 全部(all)
 getCategoryId(route.params.categoryName);
 </script>
 
@@ -127,6 +132,11 @@ $borderColor: #373d43;
       display: grid;
       grid-row-gap: 10px;
     }
+  }
+  .sticky {
+    height: 650px;
+    position: sticky;
+    top: 100px;
   }
 }
 </style>

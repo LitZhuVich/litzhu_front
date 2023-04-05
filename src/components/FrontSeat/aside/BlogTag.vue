@@ -1,4 +1,5 @@
 <template>
+  <!-- TODO:需要动态显示标签 -->
   <aside id="tags">
     <div class="box">
       <h2 class="title">标签</h2>
@@ -6,19 +7,45 @@
         <div class="tag_item">
           <span class="shap">#</span>
           <span class="tagName">TypeSciprt</span>
-          <span class="tagNumber">2</span>
+          <span class="articleTotal">2</span>
         </div>
         <div class="tag_item">
           <span class="shap">#</span>
           <span class="tagName">GoLang</span>
-          <span class="tagNumber">2</span>
+          <span class="articleTotal">2</span>
         </div>
         <div class="tag_item">
           <span class="shap">#</span>
           <span class="tagName">Laravel</span>
-          <span class="tagNumber">2</span>
+          <span class="articleTotal">5</span>
+        </div>
+        <div class="tag_item">
+          <span class="shap">#</span>
+          <span class="tagName">TypeSciprt</span>
+          <span class="articleTotal">2</span>
+        </div>
+        <div class="tag_item">
+          <span class="shap">#</span>
+          <span class="tagName">GoLang</span>
+          <span class="articleTotal">2</span>
+        </div>
+        <div class="tag_item">
+          <span class="shap">#</span>
+          <span class="tagName">Laravel</span>
+          <span class="articleTotal">5</span>
+        </div>
+        <div class="tag_item">
+          <span class="shap">#</span>
+          <span class="tagName">Laravel</span>
+          <span class="articleTotal">5</span>
+        </div>
+        <div class="tag_item">
+          <span class="shap">#</span>
+          <span class="tagName">Laravel</span>
+          <span class="articleTotal">5</span>
         </div>
       </div>
+      <!-- TODO:显示更多标签，展现页面 -->
       <p class="tag_more">更多标签 ...</p>
     </div>
   </aside>
@@ -34,8 +61,6 @@
   padding: 20px;
   box-sizing: border-box;
   margin-top: 20px;
-  position: sticky;
-  top: 470px;
   .title {
     height: 50px;
     font-size: 22px;
@@ -67,7 +92,7 @@
       .tagName {
         color: rgba($color: #ffffff, $alpha: 0.8);
       }
-      .tagNumber {
+      .articleTotal {
         position: absolute;
         right: 10px;
         color: #4169e1;

@@ -1,7 +1,7 @@
 <template>
   <aside id="notice">
     <div class="box">
-      <h2 class="title">广告</h2>
+      <h2 class="title">公告</h2>
       <p class="notice_text">我会努力做好一个网站的</p>
     </div>
   </aside>

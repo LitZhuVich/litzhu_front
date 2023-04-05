@@ -1,4 +1,6 @@
 <template>
+  <HeaderView></HeaderView>
+  <!-- TODO:关于本站 -->
   <div id="body">
     <article>
       <div class="info">
@@ -11,7 +13,7 @@
           <span>发布时间: {{ articleContent.created_at }}</span>
           <!-- <span>最后一次修改时间: {{ articleContent.updated_at }}</span> -->
           <span>
-            共有: {{ contentLength(articleContent.content?.length) }} 字
+            共有: {{ formatNumber(articleContent.content?.length) }} 字
           </span>
           <!-- <span>阅读量: {{ articleContent.readingVolume }}</span> -->
           <!-- <span>收藏: {{ articleContent.readingVolume }}</span> -->
@@ -26,84 +28,57 @@
 
 <script lang="ts" setup>
 import axios from "axios";
-import { reactive, ref, Ref } from "vue";
+import { ref, Ref } from "vue";
 import { useRoute } from "vue-router";
 // markdown
-import hljs from "highlight.js";
-import "highlight.js/styles/atom-one-light.css"; // 样式
+// import hljs from "highlight.js";
+// import "highlight.js/styles/atom-one-light.css"; // 样式
 
+import HeaderView from "../components/FrontSeat/Layout/HeaderView.vue";
 import BlogProsonalInfo from "../components/FrontSeat/aside/UserPersonalInfo.vue";
 const route = useRoute();
 
 const props = defineProps(["articleId"]);
 
-// 当前文章的分类名
 const categoryName: Ref<string | string[]> = ref(route.params.categoryName);
-// 文章类型接口
+// 文章类型
 interface articleType {
-  id?: number; // 文章id
-  user_id?: number; // 文章所属用户id
   title?: string; // 标题
   cover?: string; // 图片
-  summary?: string; // 摘要
   content?: string; // 内容
-  type?: boolean; // 文章类型
-  reprint_url?: string;
-  allow_comments?: boolean;
-  status?: boolean;
-  del_type?: boolean;
-  readingVolume?: number; // 阅读量
-  likes?: number;
   created_at?: Date;
-  updated_at?: Date;
 }
-
-// 用户类型接口
+// 用户类型
 interface userType {
-  id?: number;
   username?: string;
-  password?: string;
-  sex?: boolean;
-  avater?: string;
-  age?: number;
-  birthday?: Date;
-  phone?: string;
-  email?: string;
-  introduction?: string;
-  role?: boolean;
-  status?: boolean;
-  login_token?: string;
-  remember_token?: string;
-  created_at?: Date;
-  updated_at?: Date;
 }
 const articleContent: Ref<articleType> = ref({});
 const articleUser: Ref<userType> = ref({});
-const getArticle = (categoryName: string, articleId: number): void => {
-  axios
-    .get(
-      `http://www.litzhuvxzvin.com/api/v1/article/${categoryName}/${articleId}`
-    )
-    .then((result) => {
-      console.log(result.data.article);
-      articleContent.value = result.data.article;
-      articleUser.value = result.data.article.user;
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
+const getArticle = async (
+  categoryName: string,
+  articleId: number
+): Promise<void> => {
+  try {
+    const response = await axios.get(
+      `http://litzhu.svvs.top/api/v1/article/${categoryName}/${articleId}`
+    );
+    articleContent.value = response.data.article;
+    articleUser.value = response.data.article.user;
+  } catch (error: any) {
+    console.log("获取文章错误:", error.message);
+  }
 };
-getArticle(categoryName.value.toString(), props.articleId);
-
-const contentLength = (number: number | undefined): number | string => {
-  const num = number ?? 0;
-  // 位数转换
+// 位数转换
+const formatNumber = (number: number | undefined): number | string => {
+  const num = number || 0;
   return num > 1000 && num < 10000
-    ? (num / 1000).toFixed(1) + "k"
+    ? `${(num / 1000).toFixed(1)}k`
     : num >= 10000
-    ? (num / 10000).toFixed(1) + "w"
+    ? `${(num / 10000).toFixed(1)}w`
     : num;
 };
+// 默认调用
+getArticle(categoryName.value.toString(), props.articleId);
 </script>
 
 <style lang="scss">

@@ -1,23 +1,18 @@
 <template>
-  <div>
-    <!-- 浅色 -->
-    <!-- <router-view data-theme="light-theme"></router-view> -->
-    <!-- 暗色 -->
-    <!-- <router-view data-theme="dark-theme"></router-view> -->
+  <!-- 浅色 -->
+  <!-- <router-view data-theme="light-theme"></router-view> -->
+  <!-- 暗色 -->
+  <!-- <router-view data-theme="dark-theme"></router-view> -->
 
-    <!-- header -->
-    <HeaderView></HeaderView>
-    <!-- main -->
-    <router-view name="main"></router-view>
-    <router-view name="articleDescription"></router-view>
-    <router-view name="auth"></router-view>
+  <!-- main -->
+  <router-view name="main"></router-view>
+  <router-view name="articleDescription"></router-view>
+  <router-view name="auth"></router-view>
 
-    <!-- footer -->
-  </div>
+  <!-- footer -->
 </template>
 
 <script setup lang="ts">
-import HeaderView from "./components/FrontSeat/Layout/HeaderView.vue";
 /* matchMedia("(prefers-color-scheme: dark)").matches;
 const switchNightMode = (): void => {
   let Mode = document.cookie.split(";")[0].split("=")[1];

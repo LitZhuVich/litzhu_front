@@ -1,4 +1,5 @@
 <template>
+  <!-- TODO:注册功能有待修改 -->
   <div id="body">
     <div id="loginForm">
       <span class="title">注册</span>
@@ -22,7 +23,7 @@
           />
         </li>
         <li>
-          <button type="submit" id="loginBtn" @click="login()">注册</button>
+          <button type="submit" id="loginBtn" @click="register()">注册</button>
         </li>
         <li class="operation">
           <router-link :to="{ name: 'login' }"> 登录 </router-link>
@@ -33,25 +34,25 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, Ref } from "vue";
 import { useRoute } from "vue-router";
 import axios from "axios";
-let username = ref("");
-let password = ref("");
-const login = (): void => {
-  axios
-    .post(`http://www.litzhuvxzvin.com/api/v1/store`, {
+const route = useRoute();
+const username: Ref<string> = ref("");
+const password: Ref<string> = ref("");
+const register = async (): Promise<void> => {
+  try {
+    const response = await axios.post(`http://litzhu.svvs.top/api/v1/store`, {
       username: username.value,
       password: password.value,
-    })
-    .then((result) => {
-      console.log("注册成功");
-    })
-    .catch((err) => {
-      alert("注册失败");
-      console.log(err.message);
-      console.log("注册失败");
     });
+    console.log("注册成功");
+    return response.data;
+  } catch (error: any) {
+    console.log(error.message);
+    console.log("注册失败");
+    throw new Error(error);
+  }
 };
 </script>
 

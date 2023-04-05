@@ -3,6 +3,7 @@ import { App } from "vue";
 
 const routes: RouteRecordRaw[] = [
   {
+    // 显示网站首页
     path: "/",
     name: "index",
     components: {
@@ -10,12 +11,14 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
+    // 显示博客首页
     path: "/blogs",
-    redirect: "/blogs/全部",
+    redirect: "/blogs/all",
     name: "blogs",
     components: {
       main: () => import("../stores/BlogIndexView.vue"),
     },
+    // 博客首页可以根据分类名来获取来分类的文章
     children: [
       {
         path: ":categoryName",
@@ -26,6 +29,7 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
+    // 文章详情页
     path: "/blogs/:categoryName/:articleId",
     name: "articleId",
     props: true,
@@ -34,6 +38,7 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
+    // 关于网站
     path: "/about",
     name: "about",
     components: {
@@ -41,6 +46,7 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
+    // 登录页面
     path: "/login",
     name: "login",
     components: {
@@ -48,6 +54,7 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
+    // 注册页面
     path: "/register",
     name: "register",
     components: {

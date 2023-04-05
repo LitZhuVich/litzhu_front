@@ -55,9 +55,9 @@
       </ul>
     </nav>
     <div class="header_function">
-      <label class="switchColors">
+      <!-- <label class="switchColors">
         <input type="checkbox" class="checkbox" />
-      </label>
+      </label> -->
       <div>
         <button id="loginBtn" @click="login()">登录</button>
       </div>

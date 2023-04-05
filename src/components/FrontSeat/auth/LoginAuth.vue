@@ -1,4 +1,5 @@
 <template>
+  <!-- TODO:登录功能有待修改 -->
   <div id="body">
     <div id="loginForm">
       <span class="title">登录</span>
@@ -34,25 +35,26 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, Ref } from "vue";
 import { useRoute } from "vue-router";
 import axios from "axios";
-let username = ref("");
-let password = ref("");
-const login = (): void => {
-  axios
-    .post(`http://www.litzhuvxzvin.com/api/v1/login`, {
+const route = useRoute();
+const username: Ref<string> = ref("");
+const password: Ref<string> = ref("");
+const login = async (): Promise<void> => {
+  try {
+    const response = await axios.post(`http://litzhu.svvs.top/api/v1/login`, {
       username: username.value,
       password: password.value,
-    })
-    .then((result) => {
-      console.log("登录成功");
-    })
-    .catch((err) => {
-      // alert(err.message);
-      console.log(err.message);
-      console.log("登录失败");
     });
+    console.log("登录成功");
+
+    return response.data;
+  } catch (error: any) {
+    console.log(error.message);
+    console.log("登录失败");
+    throw new Error(error);
+  }
 };
 </script>
 

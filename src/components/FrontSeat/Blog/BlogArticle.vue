@@ -23,7 +23,6 @@
             </span>
           </span>
           <div class="classification">
-            <!-- TODO:用来确认文章类型 -->
             <span class="blogTab">
               <!-- {{ articleContent.articleContent.summary }} -->
               {{ categoryName }}
@@ -34,7 +33,14 @@
     </router-link>
   </article>
 </template>
-
+<!-- interface articleType {
+  id: number;
+  cover: string;
+  title: string;
+  summary: string;
+  created_at: string;
+}
+defineProps<{ articlesItem: articleType }>(); -->
 <script setup lang="ts">
 import { ref } from "vue";
 import { useRoute } from "vue-router";
